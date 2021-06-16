@@ -1,7 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 const Header = (props) => {
+  const [searchSubmitted, setSearch] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  if (searchSubmitted) {
+    return <Redirect to={`/search/${searchText}`} />;
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (searchText) {
+      setSearch(true);
+    }
+  }
+
   return (
   <header className="header">
     <Link to="/"><img src="https://fontmeme.com/permalink/190707/fd4735271a0d997cbe19a04408c896fc.png" alt="netflix-font" border="0" /></Link>
@@ -12,13 +26,17 @@ const Header = (props) => {
         </ul>
       </nav>
     </div>
-    <form id="search" className="search">
+    <form
+      id="search"
+      className="search"
+      onSubmit={handleSubmit}
+    >
       <input
         type="search"
         placeholder="Search for a title..."
-        value=""
+        value={searchText}
+        onChange={(event) => setSearchText(event.target.value)}
       />
-      {/*Still need to control the input*/}
       <div className="searchResults"></div>
     </form>
   </header>
