@@ -11,10 +11,12 @@ export const search = async (qString) => {
 export const getPopular = async (id) => {
   const baseUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}`;
   const network = `&with_watch_providers=${id}`;
+  const region = `&watch_region=CA`;
   const sort = `&sort_by=popularity.desc`;
-  const response = await fetch(baseUrl + network + sort);
+  const fullUrl = baseUrl + network + region + sort;
+
+  const response = await fetch(fullUrl);
   const data = await response.json();
 
-  console.log(data);
   return data.results;
 }

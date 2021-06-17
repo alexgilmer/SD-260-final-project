@@ -8,7 +8,7 @@ const TitleList = ({ name, id }) => {
   useEffect(() => {
     getPopular(id)
     .then(data => setShows(data));
-  }, []);
+  }, [id]);
 
   return (
   <div className="titleList">
