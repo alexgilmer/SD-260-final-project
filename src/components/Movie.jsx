@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Movie = ({ item, isOnList }) => {
+const Movie = ({ item, isOnList, changeFavCB }) => {
   return (
   <div className="movie">
     <Link to={`/details/${item.id}`}>
@@ -14,7 +14,11 @@ const Movie = ({ item, isOnList }) => {
         </div>
       </div>
     </Link>
-    <div data-toggled={isOnList} className="listToggle">
+    <div
+      data-toggled={isOnList}
+      className="listToggle"
+      onClick={() => changeFavCB(item.id)}
+    >
       <div><i className="fa fa-fw fa-plus"></i><i className="fa fa-fw fa-check"></i></div>
     </div>
   </div>
