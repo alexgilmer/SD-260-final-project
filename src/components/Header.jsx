@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Header = (props) => {
-  const [searchSubmitted, setSearch] = useState(false);
+  const history = useHistory();
   const [searchText, setSearchText] = useState('');
-
-  if (searchSubmitted) {
-    return <Redirect to={`/search/${searchText}`} />;
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (searchText) {
-      setSearch(true);
-    }
+    history.push({
+      pathname: '/search',
+      search: `query=${searchText}`
+    });
+    setSearchText('');
   }
 
   return (
