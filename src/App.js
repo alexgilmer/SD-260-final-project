@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import PageHome from './components/PageHome';
 import PageSearch from './components/PageSearch';
 import PageDetails from './components/PageDetails';
+import PageWatchList from './components/PageWatchList';
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
 
         <Route path="/details/:id">
           <PageDetails />
+        </Route>
+
+        <Route path="/my-watch-list">
+          <PageWatchList />
         </Route>
       </Switch>
     </>

@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom';
 import { getDetails } from '../utilities/tmdbAPI';
 import { getList, setList } from '../utilities/watchListAPI';
 
-const PageDetails = (props) => {
-  const { id } = useParams();
+const PageDetails = () => {
+  const params = useParams();
+  const id = parseInt(params.id);
+
   const [show, setShow] = useState({});
   const [favList, setFavList] = useState([]);
 
