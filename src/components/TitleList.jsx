@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Movie from './Movie';
+import { getPopular } from '../utilities/tmdbAPI';
 
-const TitleList = (props) => {
+const TitleList = ({ name, id }) => {
+  const [shows, setShows] = useState([]);
+
+  useEffect(() => {
+    getPopular(id)
+    .then(data => setShows(data));
+  }, []);
+
   return (
   <div className="titleList">
     <div className="title">
-      <h1>Netflix</h1>
+      <h1>{name}</h1>
       <div className="titles-wrapper">
-        <Movie />
-        <Movie />
-        <Movie />
-        <Movie />
-        <Movie />
+        {shows.map((show, index) => {
+          return <Movie item={show} key={index} />;
+        })}
       </div>
     </div>
   </div>
