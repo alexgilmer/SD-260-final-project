@@ -1,11 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDetails } from '../utilities/tmdbAPI';
-
+import { getList, setList } from '../utilities/watchListAPI';
 
 const PageDetails = (props) => {
   const { id } = useParams();
   const [show, setShow] = useState({});
+  const [favList, setFavList] = useState([]);
+
+  const updateFaves = () => {
+    setFavList(getList())
+  };
+
+  useEffect(() => {
+    updateFaves();
+  }, []);
+
+  const changeFav = () => {
+    if (isOnList) {
+      setList(favList.filter(elem => elem !== id));
+    } else {
+      setList([...favList, id]);
+    }
+    updateFaves();
+  };
 
   useEffect(() => {
     getDetails(id)
@@ -13,6 +31,8 @@ const PageDetails = (props) => {
       setShow(data);
     });
   }, [id]);
+
+  const isOnList = favList.includes(id);
 
   return (
     <div className="show-details">
@@ -22,7 +42,12 @@ const PageDetails = (props) => {
       <div className="description">
         {show.overview}
       </div>
-      <button className="remove-to-watchlist">- Remove from watch list</button>
+      <button
+        className={isOnList ? "remove-to-watchlist" : "add-to-watchlist"}
+        onClick={() => changeFav()}
+      >
+        {isOnList ? '- Remove from' : '+ Add to'} watch list
+      </button>
     </div>
   </div>
   );
