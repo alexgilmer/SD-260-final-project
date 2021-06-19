@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getPopular } from '../utilities/tmdbAPI';
 import TitleList from './TitleList';
 
-const PageHome = (props) => {
-  const services = [
+const services = [
   {
     name: 'Netflix',
     id: 8
@@ -20,14 +20,28 @@ const PageHome = (props) => {
     id: 350
   }
 ];
+
+const PageHome = (props) => {
+  const [shows, setShows] = useState([]);
+
+  useEffect(() => {
+    Promise.all(
+      services.map(service => {
+        return getPopular(service.id);
+      })
+    ).then(results => {
+      setShows(results);
+    });
+  }, []);
+
   return (
     <>
-      {services.map(service => {
+      {shows.map((showList, index) => {
         return (
         <TitleList
-          name={service.name}
-          id={service.id}
-          key={service.id}
+          name={services[index].name}
+          shows={showList}
+          key={services[index].id}
         />
         );
       })}

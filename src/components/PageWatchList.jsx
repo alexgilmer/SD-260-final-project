@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDetails } from '../utilities/tmdbAPI';
-import Movie from './Movie';
 import { getList, setList } from '../utilities/watchListAPI';
+import TitleList from './TitleList';
 
 const PageWatchList = () => {
   const [showList, setShowList] = useState([]);
@@ -24,34 +24,11 @@ const PageWatchList = () => {
     });
   }, [favList])
 
-  const changeFav = (id) => {
-    const isOnList = favList.includes(id);
-    if (isOnList) {
-      setList(favList.filter(elem => elem !== id));
-    } else {
-      setList([...favList, id]);
-    }
-    updateFaves();
-  }
-
   return (
-    <div className="titleList">
-      <div className="title">
-        <h1>My Watch List</h1>
-        <div className="titles-wrapper">
-          {showList.map((show) => {
-            return (
-              <Movie
-                item={show}
-                key={show.id}
-                isOnList={true}
-                changeFavCB={changeFav}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    <TitleList
+      shows={showList}
+      name="My Watch List"
+    />
   );
 }
  
