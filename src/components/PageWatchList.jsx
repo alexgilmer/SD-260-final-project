@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDetails } from '../utilities/tmdbAPI';
-import { getList, setList } from '../utilities/watchListAPI';
+import { getList } from '../utilities/watchListAPI';
 import TitleList from './TitleList';
 
 const PageWatchList = () => {
